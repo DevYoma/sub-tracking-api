@@ -6,12 +6,21 @@ import userRouter from "./routes/user.routes.js";
 import authRouter from "./routes/auth.routes.js";
 import subscriptionRouter from "./routes/subscription.routes.js";
 import connectToDatabase from "./database/mongodb.js";
+import errorMidddleware from "./middlewares/err.middleware.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
+
+// middlewares(allow us to parse json)
+app.use(express.json());
+app.use(express.urlencoded({ extended: false })); // for form data(not nested)
+app.use(cookieParser());
 
 app.use('/api/v1/auth', authRouter); // api/v1/auth/sign-up
 app.use('/api/v1/users', userRouter); // api/v1/users
 app.use('/api/v1/subscriptions', subscriptionRouter); // api/v1/subscriptions
+
+app.use(errorMidddleware);
 
 app.get('/', (req, res) => {
     res.send('Welcome to the Subscription Tracker API');
