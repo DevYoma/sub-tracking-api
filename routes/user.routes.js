@@ -10,7 +10,7 @@ userRouter.get('/:id', authorize, getUser);
 
 userRouter.post('/', (req, res) => {
     res.send({
-        title: "CREATE new user",
+        title: "CREATE new user",   
     })
 })
 
